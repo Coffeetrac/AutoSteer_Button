@@ -175,7 +175,7 @@ void setup()
 { 
   //keep pulled high and drag low to activate, noise free safe    
   pinMode(WORKSW_PIN, INPUT_PULLUP);   //Pin D4 PD4
-  pinMode(STEERSW_PIN, INPUT_PULLUP);  //Pin 11 PB2  
+  pinMode(STEERSW_PIN, INPUT_PULLUP);  //Pin 11 PD3  
 
   //preset Outputs
   pinMode(DIR_PIN, OUTPUT); // direction pin of PWM Board
