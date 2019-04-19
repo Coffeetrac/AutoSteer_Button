@@ -7,12 +7,14 @@
                                 // 3 =  PWM 2-Coil Valve + IBT_2 Driver
                                 // 4 =  Danfoss Valve PVE A/H/M + IBT_2 Driver
 
+  #define Output_Invert 0       // 1 = reverse output direction (Valve & Motor)
+
   #define ADC_Mode 0            //0 = No ADS installed, Wheel Angle Sensor connected directly to Arduino at A0
                                 //2 = ADS1115 Differential Mode - Connect Sensor GND to A1, Signal to A0
                                
   #define SteerPosZero 512      //vary this to get near 0 degrees when wheels are straight forward    
                                 //with Arduino ADC start with 512 (0-1024)
-                                //with ADS start with 13000  (possible Values are 0-26000 Counts) 
+                                //with ADS start with 6500  (possible Values are 0-13000 Counts) 
                                
   #define Invert_WAS 0          // set to 1 to Change Direction of Wheel Angle Sensor - to +                      
   
@@ -60,7 +62,7 @@
   //#define RELAY8_PIN 13  //PB5  serial Mode only
 
 
-  #define EEP_Ident 0xEDFE
+  #define EEP_Ident 0xEDFA
 
   #include <Wire.h>       
   #include <EEPROM.h>
@@ -92,6 +94,9 @@
 #if ADC_Mode==2
   #include "Adafruit_ADS1015.h"
   Adafruit_ADS1115 ads; // Use this for the 16-bit version ADS1115
+  #define SteerSensorCnt 200
+#else
+  #define SteerSensorCnt 10  
 #endif
 
 #if Inclinometer_Installed ==2 | Inclinometer_Installed ==3
@@ -362,15 +367,16 @@ void loop()
     steeringPosition += analogRead(W_A_S);    delay(1);
     steeringPosition += analogRead(W_A_S);    delay(1);
     steeringPosition += analogRead(W_A_S);
+    steeringPosition = steeringPosition >> 2; //divide by 4 
 #endif  
 #if ADC_Mode==2    
     steeringPosition = ads.readADC_Differential_0_1();    delay(2);    //ADS1115 Differential Mode 
     steeringPosition += ads.readADC_Differential_0_1();   delay(2);    //Connect Sensor GND to A1
     steeringPosition += ads.readADC_Differential_0_1();   delay(2);    //Connect Sensor Signal to A0
     steeringPosition += ads.readADC_Differential_0_1();
+    steeringPosition = steeringPosition >> 3; //divide by 8 
 #endif 
-   
-    steeringPosition = steeringPosition >> 2; //divide by 4 
+      
     actualSteerPos=steeringPosition;  // stored for >zero< Funktion  
 
     steeringPosition = (steeringPosition - steerSettings.steeringPositionZero);   //center the steering position sensor
