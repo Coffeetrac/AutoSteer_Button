@@ -24,7 +24,10 @@ void calcSteeringPID(void)
   
  if (pwmDrive > 255) pwmDrive = 255;
  if (pwmDrive < -255) pwmDrive = -255;
-
+ 
+ #if (Output_Invert == 1) 
+   pwmDrive *= -1;
+ #endif
  }
  
 #if (Output_Driver == 1) //Steering Motor + Cytron MD30C Driver
