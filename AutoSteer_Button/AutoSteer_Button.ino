@@ -175,7 +175,7 @@
   int lastButtonState = HIGH;   // the previous reading from the Autosteer Button
   unsigned long lastDebounceTime = 0;  // the last time the output was toggled
 
-  byte relay = 0, uTurn = 0, workSwitch = 0, steerSwitch = 1, switchByte = 0;
+  byte relay = 0, uTurn = 0, workSwitch = 0, steerSwitch = 1, impSwitch = 0, switchByte = 0;
   float distanceFromLine = 0, corr = 0, speeed = 0;
   float olddist = 0;
   
