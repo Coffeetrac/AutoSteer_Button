@@ -208,6 +208,7 @@
 void setup()
 { 
   //keep pulled high and drag low to activate, noise free safe    
+  pinMode(encAPin, INPUT_PULLUP);
   pinMode(WORKSW_PIN, INPUT_PULLUP);   //
   pinMode(STEERSW_PIN, INPUT_PULLUP);  // 
 
