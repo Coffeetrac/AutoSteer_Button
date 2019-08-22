@@ -375,8 +375,7 @@ void loop()
     roll += analogRead(Dogs2_Roll);
     roll = roll >> 2; //divide by 4
     //inclinometer goes from -25 to 25 from 0.5 volts to 4.5 volts
-    rollK = map(roll, 0, 1023, -400, 400); //16 counts per degree
-
+    rollK = map(roll, 100, 923, -400, 400); //16 counts per degree
 #endif
 
 #if Inclinometer_Installed ==2 | Inclinometer_Installed ==3   // MMA8452 (1) Inclinometer
